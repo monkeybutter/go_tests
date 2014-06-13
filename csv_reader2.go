@@ -24,9 +24,31 @@ func main() {
 	fmt.Println(fields)
 	fmt.Println(fields[0])
 	fmt.Println(reflect.TypeOf(fields))
-	column := []string{"A", "B", "C", "D"}
-	fmt.Println(column)
-	m := make(map[string][]string)
-	m["primer"] = column
+
+	/*
+	Transpose the 2d string array
+	*/
+	columns := make([][]string, len(fields[0]))
+	for i:= range(fields[0]) {
+		columns[i] = make([]string, len(fields))
+		for j := range fields {
+			columns[i][j] = fields[j][i]
+		}
+	}
+
+	fmt.Println(columns)
+	fmt.Println(columns[0])
+	fmt.Println(reflect.TypeOf(columns))
+	
+	
+	colNames := fields[0]
+	m := make(map[string]interface{})
+	//ia := []interface{}{1,"df",3}
+	ia := [][]int{{1,2,3},{1,2,3},{1,2,3},{1,2,3}}
+	m["primer"] = colNames
+	m["sencod"] = ia
+	//columns[0]
 	fmt.Println(m)
+	fmt.Println(reflect.TypeOf(m["primer"]))
+	fmt.Println(reflect.TypeOf(m["sencod"]))
 }
