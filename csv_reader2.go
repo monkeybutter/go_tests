@@ -8,6 +8,56 @@ import (
 	"reflect"
 )
 
+func converter(slice []string) interface{} {
+	int_col := make([]int, len(slice))
+	conv_succeed := true
+	for i := range slice {
+		t, err := strconv.Atoi(slice[i])
+		if err == nil {
+			int_col[i] = t
+		} else {
+			conv_succeed = false
+			break
+		}
+	}
+	if conv_succeed {
+		return int_col
+	}
+
+	float_col := make([]float64, len(slice))
+	conv_succeed = true
+	for i := range slice {
+		t, err := strconv.ParseFloat(slice[i], 64)
+		if err == nil {
+			float_col[i] = t
+		} else {
+			conv_succeed = false
+			break
+		}
+	}
+	if conv_succeed {
+		return float_col
+	}
+
+	bool_col := make([]bool, len(slice))
+	conv_succeed = true
+	for i := range slice {
+		t, err := strconv.ParseBool(slice[i])
+		if err == nil {
+			bool_col[i] = t
+		} else {
+			conv_succeed = false
+			break
+		}
+	}
+	if conv_succeed {
+		return bool_col
+	}
+
+	return slice
+
+}
+
 func main() {
 	csvFile, err := os.Open("./table.csv")
 	defer csvFile.Close()
@@ -41,14 +91,13 @@ func main() {
 	fmt.Println(reflect.TypeOf(columns))
 	
 	
-	colNames := fields[0]
 	m := make(map[string]interface{})
-	//ia := []interface{}{1,"df",3}
-	ia := [][]int{{1,2,3},{1,2,3},{1,2,3},{1,2,3}}
-	m["primer"] = colNames
-	m["sencod"] = ia
-	//columns[0]
+
+	for index,colName := range fields[0] {
+		m[colName] = converter(columns[index])
+	}
+
 	fmt.Println(m)
-	fmt.Println(reflect.TypeOf(m["primer"]))
-	fmt.Println(reflect.TypeOf(m["sencod"]))
+	//fmt.Println(reflect.TypeOf(m["primer"]))
+	//fmt.Println(reflect.TypeOf(m["sencod"]))
 }
