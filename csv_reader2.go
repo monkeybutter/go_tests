@@ -6,10 +6,19 @@ import (
 	"io"
 	"os"
 	"reflect"
+	"strconv"
 )
 
-func converter(slice []string) interface{} {
-	int_col := make([]int, len(slice))
+type Column struct {
+	rows []interface{}
+}
+
+func (col Column) GetSize() int {
+	return len(col.rows)
+}
+
+func converter(slice []string) []interface{} {
+	int_col := make([]interface{}, len(slice))
 	conv_succeed := true
 	for i := range slice {
 		t, err := strconv.Atoi(slice[i])
@@ -24,7 +33,7 @@ func converter(slice []string) interface{} {
 		return int_col
 	}
 
-	float_col := make([]float64, len(slice))
+	float_col := make([]interface{}, len(slice))
 	conv_succeed = true
 	for i := range slice {
 		t, err := strconv.ParseFloat(slice[i], 64)
@@ -39,7 +48,7 @@ func converter(slice []string) interface{} {
 		return float_col
 	}
 
-	bool_col := make([]bool, len(slice))
+	bool_col := make([]interface{}, len(slice))
 	conv_succeed = true
 	for i := range slice {
 		t, err := strconv.ParseBool(slice[i])
@@ -54,7 +63,11 @@ func converter(slice []string) interface{} {
 		return bool_col
 	}
 
-	return slice
+	string_col := make([]interface{}, len(slice))
+	for i, el := range slice {
+		string_col[i] = el
+	}
+	return string_col
 
 }
 
@@ -90,14 +103,16 @@ func main() {
 	fmt.Println(columns[0])
 	fmt.Println(reflect.TypeOf(columns))
 	
-	
-	m := make(map[string]interface{})
+	m := make(map[string]Column)
 
 	for index,colName := range fields[0] {
-		m[colName] = converter(columns[index])
+		m[colName] = Column{}
+		fmt.Println(reflect.TypeOf(m[colName].rows))
+		fmt.Println(reflect.TypeOf(converter(columns[index][1:])))
+		//m[colName].rows = converter(columns[index])
 	}
 
 	fmt.Println(m)
-	//fmt.Println(reflect.TypeOf(m["primer"]))
-	//fmt.Println(reflect.TypeOf(m["sencod"]))
+	fmt.Println(reflect.TypeOf(m["F"]))
+	fmt.Println(reflect.TypeOf(m["index"]))
 }
