@@ -13,8 +13,9 @@ import (
 package main
 
 import (
-"fmt";
-"reflect")
+	"fmt"
+	"reflect"
+)
 
 type foo struct {
 	a int
@@ -25,9 +26,17 @@ func main() {
 	slice := []int{1, 2, 3, 4}
 	a := []interface{}{1, 2, 3.14, "hey", slice, foo{10, 20}}
 	fmt.Println(a)
-	fmt.Println(a[4])
+	//fmt.Println(a[4][2])
 	fmt.Println(reflect.TypeOf(a[4]))
+	switch str := a[4].(type) {
+	case []int:
+		fmt.Println(str[2])
+		fmt.Println("45")
+	case string:
+		fmt.Println(str)
+	}
 }
+
 */
 
 type Columner interface {
