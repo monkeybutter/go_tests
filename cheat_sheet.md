@@ -4,21 +4,6 @@
 
 https://github.com/basti1302/go-lang-cheat-sheet/
 
-## Go in a Nutshell
-
-* Imperative language
-* Statically typed
-* Syntax similar to Java/C/C++, but less parantheses and no semicolons
-* Compiles to native code (no JVM)
-* No classes, but structs with methods
-* Interfaces
-* No implementation inheritance. There's [type embedding](http://golang.org/doc/effective%5Fgo.html#embedding), though.
-* Functions are first class citizens
-* Functions can return multiple values
-* Go has closures
-* Pointers, but not pointer arithmetic
-* Built-in concurrency primitives: Goroutines and Channels
-
 # Basic Syntax
 
 ## Hello World
