@@ -233,7 +233,7 @@ fmt.Println(m["key"])
 
 delete(m, "key")
 
-elem, ok = m["key"] // test if key "key" is present and retrieve it, if so
+elem, ok := m["key"] // test if key "key" is present and retrieve it, if so
 
 // map literal
 var m = map[string]Vertex{
@@ -297,7 +297,7 @@ type Awesomizer interface {
     Awesomize() string
 }
 
-// types do *not* declare to implement interaces
+// types do *not* declare to implement interfaces
 type Foo struct {}
 
 // instead, types implicitly satisfy an interface if they implement all required methods
